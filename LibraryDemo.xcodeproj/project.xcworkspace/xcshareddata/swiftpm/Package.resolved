@@ -1,0 +1,33 @@
+{
+  "originHash" : "cd322467f331bf130d0cfb344eca1e5442e34d250aaf1dad0fa129afdafcece4",
+  "pins" : [
+    {
+      "identity" : "declarativeuikit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/sakiyamaK/DeclarativeUIKit",
+      "state" : {
+        "revision" : "c3f93b4345cfea7b7dd683b1e39c7215e283fa22",
+        "version" : "5.0.1"
+      }
+    },
+    {
+      "identity" : "observableuikit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/sakiyamaK/ObservableUIKit",
+      "state" : {
+        "revision" : "b41baac69875be373ae44deb21a28dce1d3bbe60",
+        "version" : "3.0.0"
+      }
+    },
+    {
+      "identity" : "swiftuikit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/sakiyamaK/SwiftUIKit",
+      "state" : {
+        "revision" : "c27c202cbbe0291dbd8a837834f1da750c76a93f",
+        "version" : "0.2.0"
+      }
+    }
+  ],
+  "version" : 3
+}
