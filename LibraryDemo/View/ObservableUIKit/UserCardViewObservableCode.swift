@@ -9,7 +9,6 @@ import UIKit
 import DeclarativeUIKit
 import ObservableUIKit
 
-
 final class UserCardViewObservableCode: UIView {
 
     struct Delegate {

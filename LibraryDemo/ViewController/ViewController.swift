@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     private let user1 = User.dummy1
     private let user2 = User.dummy1
     private let user3 = User.dummy1
+    private let user4 = User.dummy1
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +47,11 @@ class ViewController: UIViewController {
                         guard let self else { return }
                         self.user3.numberOfStars = max(0, self.user3.numberOfStars - 1)
                     }))
+
+                    SwiftUIinUIKitView(user: self.user4, delegate: .init(tapAction: {[weak self] in
+                        guard let self else { return }
+                        self.user4.numberOfStars = max(0, self.user4.numberOfStars - 1)
+                    }))
                 }
                 .spacing(16)
                 .margins(.init(horizontal: 8))
@@ -59,6 +65,7 @@ class ViewController: UIViewController {
                         guard let self else { return }
                         // ObservableUIKitでデータ更新
                         self.user3.numberOfStars = min(5, self.user3.numberOfStars + 1)
+                        self.user4.numberOfStars = min(5, self.user4.numberOfStars + 1)
                     }
                 )
             )
