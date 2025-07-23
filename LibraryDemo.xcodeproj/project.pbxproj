@@ -368,7 +368,7 @@
 			repositoryURL = "https://github.com/sakiyamaK/DeclarativeUIKit";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.1;
+				minimumVersion = 5.0.2;
 			};
 		};
 		B6C7AE5C2E2F89BA008D14D0 /* XCRemoteSwiftPackageReference "ObservableUIKit" */ = {

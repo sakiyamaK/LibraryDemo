@@ -27,7 +27,7 @@ final class UserCardViewObservableCode: UIView {
         self.declarative {
             UIButton(configuration: .plain(), primaryAction: .init(handler: {[weak self] _ in
                 self?.delegate?.tapAction()
-            })).zStack {
+            })).zStack(priorities: .init(bottom: .defaultHigh)) {
                 UIStackView.vertical {
                     UIStackView.horizontal {
                         UIImageView()
@@ -38,7 +38,7 @@ final class UserCardViewObservableCode: UIView {
                             })
                             .contentMode(.scaleAspectFit)
                             .contentPriorities(.init(all: .required))
-                            .size(width: 50, height: 50)
+                            .size(width: 100, height: 100)
 
                         UIStackView.vertical {
                             UILabel()
@@ -68,6 +68,7 @@ final class UserCardViewObservableCode: UIView {
                         (0..<5).compactMap { _ in
                             UIImageView()
                                 .contentMode(.scaleAspectFit)
+                                .aspectRatio(1.0)
                                 .contentPriorities(.init(all: .required))
                         }
                     }
@@ -75,10 +76,9 @@ final class UserCardViewObservableCode: UIView {
                         self!.user?.numberOfStars
                     }, onChange: {[weak self] stackView, numberOfStars in
                         for (i, imageView) in stackView.arrangedSubviews.compactMap({ $0 as? UIImageView }).enumerated() {
-                            imageView.image = UIImage(named: i < self!.user!.numberOfStars ? "star_fill" : "star")
+                            imageView.image(UIImage(named: i < self!.user!.numberOfStars ? "star_fill" : "star"))
                         }
                     })
-                    .distribution(.fillEqually)
                     .spacing(8)
 
                     UITextView()
@@ -87,11 +87,25 @@ final class UserCardViewObservableCode: UIView {
                         }, onChange: { textView, message in
                             textView.text(message)
                         })
-                        .font(.systemFont(ofSize: 27, weight: .regular))
-                        .isScrollEnabled(true)
-                        .isEditable(false)
+                        .apply({ textView in
+                            /**
+                             このように手続的に書くこともできる
+
+                             なので
+
+                             もし非対応のパラメータがあっても、
+                             今後のバージョンアップで新しいコンポーネントが増えても、
+                             UIKit.UIViewを継承している限り宣言的にレイアウトが組める
+                             */
+                            textView.font = .systemFont(ofSize: 27, weight: .regular)
+                            textView.isScrollEnabled = true
+                            textView.isEditable = false
+                        })
+//                        .font(.systemFont(ofSize: 27, weight: .regular))
+//                        .isScrollEnabled(true)
+//                        .isEditable(false)
                         .contentPriorities(.init(vertical: .required))
-                        .minHeight(100)
+                        .height(100)
 
                 }
                 .margins(.init(top: 16, leading: 16, bottom: 16, trailing: 16))

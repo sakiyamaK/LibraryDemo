@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/sakiyamaK/DeclarativeUIKit",
       "state" : {
-        "revision" : "c3f93b4345cfea7b7dd683b1e39c7215e283fa22",
-        "version" : "5.0.1"
+        "revision" : "7e1843cd03f0873144bfcd614e09381651abbb3b",
+        "version" : "5.0.2"
       }
     },
     {

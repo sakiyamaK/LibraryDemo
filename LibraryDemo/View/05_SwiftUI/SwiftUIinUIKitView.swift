@@ -38,7 +38,7 @@ final class SwiftUIinUIKitView: UIView {
                             Image(self.user?.iconName ?? "")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 50, height: 50)
+                                .frame(width: 100, height: 100)
 
 
                             VStack {
@@ -56,7 +56,7 @@ final class SwiftUIinUIKitView: UIView {
                             ForEach(0..<5) { index in
                                 Image(index < self.user!.numberOfStars ? "star_fill" : "star")
                                     .resizable()
-                                    .aspectRatio(contentMode: .fit)
+                                    .aspectRatio(1.0, contentMode: .fit)
                             }
                         }
 
@@ -72,11 +72,14 @@ final class SwiftUIinUIKitView: UIView {
                                 .isScrollEnabled(true)
                                 .isEditable(false)
                                 .contentPriorities(.init(vertical: .required))
-                                .height(200)
                         }
+                        .frame(height: 100)
                     }
-                    .clipShape(.rect(cornerRadius: 16))
-                    .border(Color.gray, width: 1)
+                    .padding(16)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 16)
+                            .stroke(Color.gray, lineWidth: 1)
+                    )
                 }
             }
         }

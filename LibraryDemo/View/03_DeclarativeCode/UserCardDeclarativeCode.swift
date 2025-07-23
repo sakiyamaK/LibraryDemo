@@ -39,7 +39,7 @@ final class UserCardDeclarativeCode: UIView {
                         self.iconView
                             .contentMode(.scaleAspectFit)
                             .contentPriorities(.init(all: .required))
-                            .size(width: 50, height: 50)
+                            .size(width: 100, height: 100)
 
                         UIStackView.vertical {
                             self.nameLabel
@@ -59,6 +59,7 @@ final class UserCardDeclarativeCode: UIView {
                         (0..<5).compactMap { _ in
                             UIImageView()
                                 .contentMode(.scaleAspectFit)
+                                .aspectRatio(1.0)
                                 .contentPriorities(.init(all: .required))
                         }
                     }
@@ -70,7 +71,7 @@ final class UserCardDeclarativeCode: UIView {
                         .isScrollEnabled(true)
                         .isEditable(false)
                         .contentPriorities(.init(vertical: .required))
-                        .minHeight(100)
+                        .height(100)
                 }
                 .margins(.init(top: 16, leading: 16, bottom: 16, trailing: 16))
                 .cornerRadius(16)

@@ -56,19 +56,35 @@ class ViewController: UIViewController {
                 .spacing(16)
                 .margins(.init(horizontal: 8))
             }
-            .contentInset(.init(bottom: 128))
+            .contentInset(.init(bottom: 160))
         }.floatingActionView {
-            UIButton(
-                configuration: .bordered().image(UIImage(systemName: "plus")!).cornerStyle(.capsule).contentInsets(.init(all: 16)),
-                primaryAction: .init(
-                    handler: {[weak self] _ in
-                        guard let self else { return }
-                        // ObservableUIKitでデータ更新
-                        self.user3.numberOfStars = min(5, self.user3.numberOfStars + 1)
-                        self.user4.numberOfStars = min(5, self.user4.numberOfStars + 1)
-                    }
+            UIStackView.vertical {
+
+                UIButton(
+                    configuration: .bordered().image(UIImage(systemName: "minus")!).cornerStyle(.capsule).contentInsets(.init(all: 16)),
+                    primaryAction: .init(
+                        handler: {[weak self] _ in
+                            guard let self else { return }
+                            // ObservableUIKitでデータ更新
+                            self.user3.numberOfStars = max(0, self.user3.numberOfStars - 1)
+                            self.user4.numberOfStars = max(0, self.user4.numberOfStars - 1)
+                        }
+                    )
                 )
-            )
+
+                UIButton(
+                    configuration: .bordered().image(UIImage(systemName: "plus")!).cornerStyle(.capsule).contentInsets(.init(all: 16)),
+                    primaryAction: .init(
+                        handler: {[weak self] _ in
+                            guard let self else { return }
+                            // ObservableUIKitでデータ更新
+                            self.user3.numberOfStars = min(5, self.user3.numberOfStars + 1)
+                            self.user4.numberOfStars = min(5, self.user4.numberOfStars + 1)
+                        }
+                    )
+                )
+            }
+            .spacing(16)
         }
     }
 }
