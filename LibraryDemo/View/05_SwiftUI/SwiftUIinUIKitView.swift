@@ -86,11 +86,19 @@ final class SwiftUIinUIKitView: UIView {
     }
 }
 
-#Preview(traits: .fixedLayout(width: 400, height: 300), body: {
-    {
-        let user = User.dummy1
-        return SwiftUIinUIKitView(user: user, delegate: .init(tapAction: {
-            user.numberOfStars = max(0, user.numberOfStars - 1)
-        }))
+#Preview(
+    traits: .fixedLayout(width: 400, height: 300),
+    body: {
+        {
+            let user = User.dummy1
+            return SwiftUIinUIKitView(
+                user: user,
+                delegate: .init(
+                    // タップしたらuser情報を更新
+                    // viewはobservableによってSwiftUI/UIKit共に勝手に同期される
+                    tapAction: {
+                    user.numberOfStars = max(0, user.numberOfStars - 1)
+                })
+            )
     }()
 })

@@ -170,14 +170,23 @@ final class UserCardViewNormalCode: UIView {
     }
 }
 
-#Preview(traits: .fixedLayout(width: 400, height: 300), body: {
-    {
-        let user: User = User.dummy1
-        let userCardView = UserCardViewNormalCode(user: user, delegate: .init(tapAction: { userCardView in
-            var newUser: User = user
-            newUser.numberOfStars = max(0, user.numberOfStars - 1)
-            userCardView.config(user: newUser)
-        }))
-        return userCardView
+#Preview(
+    traits: .fixedLayout(width: 400, height: 300),
+    body: {
+        {
+            let user: User = User.dummy1
+
+            let userCardView = UserCardViewNormalCode(
+                user: user,
+                delegate: .init(
+                    // タップしたらuser情報を更新してviewを更新
+                    tapAction: { userCardView in
+                    var newUser: User = user
+                    newUser.numberOfStars = max(0, user.numberOfStars - 1)
+                    userCardView.config(user: newUser)
+                })
+            )
+
+            return userCardView
     }()
 })

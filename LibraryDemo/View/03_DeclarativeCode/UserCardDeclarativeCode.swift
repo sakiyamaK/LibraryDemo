@@ -29,6 +29,7 @@ final class UserCardDeclarativeCode: UIView {
         self.user = user
         self.delegate = delegate
 
+        // declarativeの中で宣言的にレイアウトが組める
         self.declarative {
             UIButton(configuration: .plain(), primaryAction: .init(handler: {[weak self] _ in
                 guard let self else { return }
@@ -78,33 +79,48 @@ final class UserCardDeclarativeCode: UIView {
                 .border(color: .systemGray, width: 1.0)
                 .backgroundColor(.systemBackground)
                 .isUserInteractionEnabled(false)
+
+                /*
+                 UIStackView.margins, UIView.cornerRadius, UIView.borderなど
+                 標準のUIKitにないけどよく使う設定は独自のメソッドを用意してる
+                 */
             }
         }
 
         if let user {
-            config(user: user)
+            configure(user: user)
         }
     }
 
-    func config(user: User) {
+    func configure(user: User) {
         self.iconView.image(UIImage(named: user.iconName))
         self.nameLabel.text(user.name)
         self.accountLabel.text(user.accountName)
-        for (i, imageView) in starStackView.arrangedSubviews.compactMap({ $0 as? UIImageView }).enumerated() {
+        let imageViews = starStackView.arrangedSubviews.compactMap({ $0 as? UIImageView })
+        for (i, imageView) in imageViews.enumerated() {
             imageView.image(UIImage(named: i < user.numberOfStars ? "star_fill" : "star"))
         }
         self.textView.text(user.message)
     }
 }
 
-#Preview(traits: .fixedLayout(width: 400, height: 300), body: {
-    {
-        let user: User = User.dummy1
-        let userCardView = UserCardDeclarativeCode(user: user, delegate: .init(tapAction: { userCardView in
-            var newUser: User = user
-            newUser.numberOfStars = max(0, user.numberOfStars - 1)
-            userCardView.config(user: newUser)
-        }))
+#Preview(
+    traits: .fixedLayout(width: 400, height: 300),
+    body: {
+        {
+            let user: User = User.dummy1
+            
+            let userCardView = UserCardDeclarativeCode(
+                user: user,
+                delegate: .init(
+                    // タップしたらuser情報を更新してviewを更新
+                    tapAction: { userCardView in
+                    var newUser: User = user
+                    newUser.numberOfStars = max(0, user.numberOfStars - 1)
+                    userCardView.configure(user: newUser)
+                })
+            )
+
         return userCardView
     }()
 })

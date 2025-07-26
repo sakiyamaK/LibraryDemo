@@ -6,6 +6,10 @@
 //
 
 import UIKit
+import DeclarativeUIKit
+import ObservableUIKit
+import SwiftUI
+import SwiftUIKit
 
 class ViewController: UIViewController {
 
@@ -21,7 +25,7 @@ class ViewController: UIViewController {
 
         self.declarative {
             UIScrollView.vertical {
-                UIStackView.vertical {
+                UIStackView.vertical(spacing: 16) {
 
                     // Xibから読み込み
                     self.userCardViewNib
@@ -39,7 +43,7 @@ class ViewController: UIViewController {
                         guard let self else { return }
                         let newUser = self.user2
                         newUser.numberOfStars = max(0, self.user2.numberOfStars - 1)
-                        userCardView.config(user: newUser)
+                        userCardView.configure(user: newUser)
                     }))
 
                     // DeclarativeUIKitでレイアウト + ObservableUIKitでデータ更新
@@ -48,16 +52,30 @@ class ViewController: UIViewController {
                         self.user3.numberOfStars = max(0, self.user3.numberOfStars - 1)
                     }))
 
+                    // 内部は主にSwiftUIでレイアウト
                     SwiftUIinUIKitView(user: self.user4, delegate: .init(tapAction: {[weak self] in
                         guard let self else { return }
                         self.user4.numberOfStars = max(0, self.user4.numberOfStars - 1)
                     }))
+
+                    // 当然ViewControllerの中でもSwiftUIでレイアウトが組める
+                    SwiftUIView {
+                        VStack {
+                            Spacer()
+                                .frame(height: 30)
+                            Text("お　し　ま　い")
+                                .font(.title)
+                        }
+                    }
                 }
-                .spacing(16)
                 .margins(.init(horizontal: 8))
             }
             .contentInset(.init(bottom: 160))
         }.floatingActionView {
+            /*
+             デフォルトで右下に寄せる設定になっているが、9箇所に貼れるし微調整もできる
+             .floatingActionView(position: .trailingBottom(CGPoint(x: 16, y: 16)))
+             */
             UIStackView.vertical {
 
                 UIButton(

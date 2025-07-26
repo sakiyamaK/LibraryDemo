@@ -8,6 +8,7 @@
 import Foundation
 import SwiftData
 
+// @Observableでもいい
 @Model
 final class User {
     var name: String
