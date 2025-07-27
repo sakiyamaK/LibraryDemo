@@ -32,8 +32,10 @@ final class UserCardViewObservableCode: UIView {
                     UIStackView.horizontal {
                         UIImageView()
                             .tracking({[weak self] in
+                                // 監視したいパラメータ
                                 self!.user?.iconName
                             }, onChange: { imageView, iconName in
+                                // 監視したいパラメータが変更されたら実行される
                                 imageView.image(UIImage(named: iconName))
                             })
                             .contentMode(.scaleAspectFit)
@@ -129,7 +131,7 @@ final class UserCardViewObservableCode: UIView {
                     // タップしたらuser情報を更新
                     // viewはobservableによって勝手に同期される
                     tapAction: {
-                    user.numberOfStars = max(0, user.numberOfStars - 1)
+                        user.minusNumberOfStars()
                 })
             )
     }()

@@ -21,7 +21,7 @@ final class SwiftUIinUIKitView: UIView {
     private var delegate: Delegate?
 
     convenience init(user: User?, delegate: Delegate? = nil) {
-        self.init(frame: .zero)
+        self.init(frame: .null)
 
         self.user = user
         self.delegate = delegate
@@ -69,7 +69,7 @@ final class SwiftUIinUIKitView: UIView {
                                     textView.text(message)
                                 })
                                 .font(.systemFont(ofSize: 27, weight: .regular))
-                                .isScrollEnabled(true)
+                                .isScrollEnabled(false)
                                 .isEditable(false)
                                 .contentPriorities(.init(vertical: .required))
                         }
@@ -97,7 +97,7 @@ final class SwiftUIinUIKitView: UIView {
                     // タップしたらuser情報を更新
                     // viewはobservableによってSwiftUI/UIKit共に勝手に同期される
                     tapAction: {
-                    user.numberOfStars = max(0, user.numberOfStars - 1)
+                        user.minusNumberOfStars()
                 })
             )
     }()

@@ -30,11 +30,13 @@ final class UserCardDeclarativeCode: UIView {
         self.delegate = delegate
 
         // declarativeの中で宣言的にレイアウトが組める
+        // 内部的にはaddSubViewして四隅の制約を揃えてる
         self.declarative {
             UIButton(configuration: .plain(), primaryAction: .init(handler: {[weak self] _ in
                 guard let self else { return }
                 self.delegate?.tapAction(self)
             })).zStack {
+                // ↑zStackは実質declarativeと同じ処理してる
                 UIStackView.vertical {
                     UIStackView.horizontal {
                         self.iconView
@@ -81,12 +83,15 @@ final class UserCardDeclarativeCode: UIView {
                 .isUserInteractionEnabled(false)
 
                 /*
-                 UIStackView.margins, UIView.cornerRadius, UIView.borderなど
+                 UIView.contentPriorities, UIView.cornerRadius, UIView.border
+                 UIStackView.margins
+                 など
                  標準のUIKitにないけどよく使う設定は独自のメソッドを用意してる
                  */
             }
         }
 
+        // 初期値を代入
         if let user {
             configure(user: user)
         }
@@ -96,8 +101,7 @@ final class UserCardDeclarativeCode: UIView {
         self.iconView.image(UIImage(named: user.iconName))
         self.nameLabel.text(user.name)
         self.accountLabel.text(user.accountName)
-        let imageViews = starStackView.arrangedSubviews.compactMap({ $0 as? UIImageView })
-        for (i, imageView) in imageViews.enumerated() {
+        for (i, imageView) in starStackView.arrangedSubviews(ofType: UIImageView.self).enumerated() {
             imageView.image(UIImage(named: i < user.numberOfStars ? "star_fill" : "star"))
         }
         self.textView.text(user.message)
@@ -115,9 +119,8 @@ final class UserCardDeclarativeCode: UIView {
                 delegate: .init(
                     // タップしたらuser情報を更新してviewを更新
                     tapAction: { userCardView in
-                    var newUser: User = user
-                    newUser.numberOfStars = max(0, user.numberOfStars - 1)
-                    userCardView.configure(user: newUser)
+                        user.minusNumberOfStars()
+                        userCardView.configure(user: user)
                 })
             )
 

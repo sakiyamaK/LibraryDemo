@@ -24,6 +24,14 @@ final class User {
         self.numberOfStars = numberOfStars
         self.message = message
     }
+
+    func minusNumberOfStars() {
+        self.numberOfStars = max(0, self.numberOfStars - 1)
+    }
+
+    func plusNumberOfStars() {
+        self.numberOfStars = min(5, self.numberOfStars + 1)
+    }
 }
 
 

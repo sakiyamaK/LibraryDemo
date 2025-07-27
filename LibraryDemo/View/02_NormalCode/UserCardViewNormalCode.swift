@@ -8,6 +8,7 @@ import UIKit
 
 final class UserCardViewNormalCode: UIView {
 
+    // 移譲させる処理をクロージャで用意
     struct Delegate {
         var tapAction: (UserCardViewNormalCode) -> Void
     }
@@ -91,7 +92,7 @@ final class UserCardViewNormalCode: UIView {
     private var delegate: Delegate?
 
     convenience init(user: User?, delegate: Delegate? = nil) {
-        self.init(frame: .zero)
+        self.init(frame: .null)
 
         self.user = user
         self.delegate = delegate
@@ -105,7 +106,7 @@ final class UserCardViewNormalCode: UIView {
         self.layer.borderColor = UIColor.systemGray.cgColor
 
         if let user {
-            self.config(user: user)
+            self.configure(user: user)
         }
     }
 
@@ -159,11 +160,11 @@ final class UserCardViewNormalCode: UIView {
         ])
     }
 
-    func config(user: User) {
+    func configure(user: User) {
         self.iconView.image = UIImage(named: user.iconName)
         self.nameLabel.text = user.name
         self.accountLabel.text = user.accountName
-        for (i, imageView) in starStackView.arrangedSubviews.compactMap({ $0 as? UIImageView }).enumerated() {
+        for (i, imageView) in starStackView.arrangedSubviews(ofType: UIImageView.self).enumerated() {
             imageView.image = UIImage(named: i < user.numberOfStars ? "star_fill" : "star")
         }
         self.textView.text = user.message
@@ -181,9 +182,8 @@ final class UserCardViewNormalCode: UIView {
                 delegate: .init(
                     // タップしたらuser情報を更新してviewを更新
                     tapAction: { userCardView in
-                    var newUser: User = user
-                    newUser.numberOfStars = max(0, user.numberOfStars - 1)
-                    userCardView.config(user: newUser)
+                        user.minusNumberOfStars()
+                        userCardView.configure(user: user)
                 })
             )
 
