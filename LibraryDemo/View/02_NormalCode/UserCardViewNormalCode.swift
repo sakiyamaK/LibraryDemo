@@ -150,7 +150,7 @@ final class UserCardViewNormalCode: UIView {
         ])
 
         NSLayoutConstraint.activate(
-            starStackView.arrangedSubviews.compactMap({ $0 as? UIImageView }).compactMap({
+            starStackView.arrangedSubviews(ofType: UIImageView.self).compactMap({
                 $0.widthAnchor.constraint(equalTo: $0.heightAnchor, multiplier: 1.0)
             })
         )

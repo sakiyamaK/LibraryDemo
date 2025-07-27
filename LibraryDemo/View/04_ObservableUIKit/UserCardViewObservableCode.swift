@@ -77,7 +77,9 @@ final class UserCardViewObservableCode: UIView {
                     .tracking({[weak self] in
                         self!.user?.numberOfStars
                     }, onChange: {[weak self] stackView, numberOfStars in
-                        for (i, imageView) in stackView.arrangedSubviews.compactMap({ $0 as? UIImageView }).enumerated() {
+                        for (i, imageView) in stackView
+                            .arrangedSubviews(ofType: UIImageView.self)
+                            .enumerated() {
                             imageView.image(UIImage(named: i < self!.user!.numberOfStars ? "star_fill" : "star"))
                         }
                     })
